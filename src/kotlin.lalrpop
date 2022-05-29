@@ -1,7 +1,51 @@
 use std::str::FromStr;
 use crate::ast::Identifier;
+use crate::ast::ImportHeader;
+use crate::ast::ImportHeader2;
 
 grammar;
+
+pub ImportHeader: ImportHeader = {
+    <ImportHeader1> ";",
+    <ImportHeader1>,
+}
+
+pub ImportHeader0p5: ImportHeader = {
+    <ImportHeader1>,
+    <mut r:ImportHeader1p5> "as" <id:Id> => {
+        r.rest_op = Some(ImportHeader2::ImportAlias(id));
+        r
+    },
+}
+
+pub ImportHeader1: ImportHeader = {
+    <mut r:ImportHeader2> "*" => {
+        r.rest_op = Some(ImportHeader2::ImportAll);
+        r
+    },
+    <ImportHeader1p5>,
+}
+
+pub ImportHeader1p5: ImportHeader = {
+    <mut r:ImportHeader2> <id:Id> => {
+        r.identifier.parts.push(id);
+        r
+    },
+}
+
+pub ImportHeader2: ImportHeader = {
+    <ImportHeader3> ".",
+    <ImportHeader1p5> ".",
+}
+
+pub ImportHeader3: ImportHeader = {
+    "import" <id:Id> => ImportHeader {
+        identifier: Identifier {
+            parts: vec![id],
+        },
+        rest_op: None
+    },
+}
 
 pub Identifier: Identifier = {
     <id:Id> => Identifier { parts: vec![id] },
@@ -19,5 +63,3 @@ pub Term: i32 = {
 };
 
 Num: i32 = <s:r"[0-9]+"> => i32::from_str(s).unwrap();
-
-Import = "import";
