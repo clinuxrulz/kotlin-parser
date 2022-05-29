@@ -6,8 +6,8 @@ use crate::ast::ImportHeader2;
 grammar;
 
 pub ImportHeader: ImportHeader = {
-    <ImportHeader1> ";",
-    <ImportHeader1>,
+    <ImportHeader0p5> ";",
+    <ImportHeader0p5>,
 }
 
 pub ImportHeader0p5: ImportHeader = {
