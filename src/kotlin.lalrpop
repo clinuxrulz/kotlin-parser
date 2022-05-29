@@ -1,6 +1,17 @@
 use std::str::FromStr;
+use crate::ast::Identifier;
 
 grammar;
+
+pub Identifier: Identifier = {
+    <id:Id> => Identifier { parts: vec![id] },
+    <mut ids:Identifier> "." <id:Id> => {
+        ids.parts.push(id);
+        ids
+    }
+}
+
+Id: String = <s:r"([a-z]|[A-Z]|_)([a-z]|[A-Z]|_|[0-9])*"> => s.to_owned();
 
 pub Term: i32 = {
     <n:Num> => n,
@@ -8,3 +19,5 @@ pub Term: i32 = {
 };
 
 Num: i32 = <s:r"[0-9]+"> => i32::from_str(s).unwrap();
+
+Import = "import";
