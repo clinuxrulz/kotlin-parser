@@ -5,6 +5,14 @@ use crate::ast::ImportHeader2;
 
 grammar;
 
+pub ImportList: Vec<ImportHeader> = {
+    => Vec::new(),
+    <mut xs: ImportList> <x: ImportHeader> => {
+        xs.push(x);
+        xs
+    }
+}
+
 pub ImportHeader: ImportHeader = {
     <ImportHeader2> ";",
     <ImportHeader2>,

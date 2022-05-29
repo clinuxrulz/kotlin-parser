@@ -2,6 +2,9 @@
 
 pub mod ast;
 
+#[cfg(test)]
+mod test;
+
 lalrpop_mod!(pub kotlin); // synthesized by LALRPOP
 
 #[test]
@@ -14,9 +17,3 @@ fn kotlin1() {
     println!("{:?}", kotlin::IdentifierParser::new().parse("part1.part2.part3"));
 }
 
-#[test]
-fn test_kotlin_import() {
-    println!("{:?}", kotlin::ImportHeaderParser::new().parse("import java.lang.String;"));
-    println!("{:?}", kotlin::ImportHeaderParser::new().parse("import java.lang.*;"));
-    println!("{:?}", kotlin::ImportHeaderParser::new().parse("import java.lang.String as JString;"));
-}
