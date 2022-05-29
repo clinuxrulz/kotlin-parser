@@ -6,39 +6,39 @@ use crate::ast::ImportHeader2;
 grammar;
 
 pub ImportHeader: ImportHeader = {
-    <ImportHeader0p5> ";",
-    <ImportHeader0p5>,
+    <ImportHeader2> ";",
+    <ImportHeader2>,
 }
 
-pub ImportHeader0p5: ImportHeader = {
-    <ImportHeader1>,
-    <mut r:ImportHeader1p5> "as" <id:Id> => {
+pub ImportHeader2: ImportHeader = {
+    <ImportHeader3>,
+    <mut r:ImportHeader4> "as" <id:Id> => {
         r.rest_op = Some(ImportHeader2::ImportAlias(id));
         r
     },
 }
 
-pub ImportHeader1: ImportHeader = {
-    <mut r:ImportHeader2> "*" => {
+pub ImportHeader3: ImportHeader = {
+    <mut r:ImportHeader5> "*" => {
         r.rest_op = Some(ImportHeader2::ImportAll);
         r
     },
-    <ImportHeader1p5>,
+    <ImportHeader4>,
 }
 
-pub ImportHeader1p5: ImportHeader = {
-    <mut r:ImportHeader2> <id:Id> => {
+pub ImportHeader4: ImportHeader = {
+    <mut r:ImportHeader5> <id:Id> => {
         r.identifier.parts.push(id);
         r
     },
 }
 
-pub ImportHeader2: ImportHeader = {
-    <ImportHeader3> ".",
-    <ImportHeader1p5> ".",
+pub ImportHeader5: ImportHeader = {
+    <ImportHeader6> ".",
+    <ImportHeader4> ".",
 }
 
-pub ImportHeader3: ImportHeader = {
+pub ImportHeader6: ImportHeader = {
     "import" <id:Id> => ImportHeader {
         identifier: Identifier {
             parts: vec![id],
