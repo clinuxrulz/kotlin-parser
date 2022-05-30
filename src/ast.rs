@@ -16,6 +16,32 @@ pub enum ImportHeader2 {
 }
 
 #[derive(Debug)]
+pub struct Type {
+    type_modifiers: Vec<TypeModifier>,
+    rest: Type2,
+}
+
+#[derive(Debug)]
+pub enum Type2 {
+    ParenthesizedType(Box<Type>),
+    NullableType(NullableType),
+    TypeReference,
+    FunctionType,
+}
+
+#[derive(Debug)]
+pub enum NullableType {
+    TypeReference,
+    ParenthesizedType(Box<Type>),
+}
+
+#[derive(Debug)]
+pub enum TypeModifier {
+    Annotation(Annotation),
+    Suspend,
+}
+
+#[derive(Debug)]
 pub enum TypeProjectionModifier {
     VarianceModifier(VarianceModifier),
     Annotation(Annotation),

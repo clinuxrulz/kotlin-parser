@@ -64,6 +64,19 @@ pub Identifier: Identifier = {
     }
 }
 
+pub TypeModifiers: Vec<ast::TypeModifier> = {
+    <x:TypeModifier> => vec![x],
+    <mut xs:TypeModifiers> <x:TypeModifier> => {
+        xs.push(x);
+        xs
+    }
+}
+
+pub TypeModifier: ast::TypeModifier = {
+    <x: Annotation> => ast::TypeModifier::Annotation(x),
+    "suspend" => ast::TypeModifier::Suspend,
+}
+
 pub TypeProjectionModifier: ast::TypeProjectionModifier = {
     <x: VarianceModifier> => ast::TypeProjectionModifier::VarianceModifier(x),
     <x: Annotation> => ast::TypeProjectionModifier::Annotation(x),
