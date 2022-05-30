@@ -65,6 +65,12 @@ pub Identifier: Identifier = {
 }
 
 pub Type: Box<ast::Type> = {
+    <rest:Type2> => {
+        Box::new(ast::Type {
+            type_modifiers: Vec::new(),
+            rest
+        })
+    },
     <m:TypeModifierMany1> <rest:Type2> => {
         Box::new(ast::Type {
             type_modifiers: m,
