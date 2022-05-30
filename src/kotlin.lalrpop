@@ -75,12 +75,8 @@ pub Type: Box<ast::Type> = {
 
 pub TypeModifiers: Vec<ast::TypeModifier> = {
     => Vec::new(),
-    <mut xs:TypeModifiers> <x:Annotation> => {
-        xs.push(ast::TypeModifier::Annotation(x));
-        xs
-    },
-    <mut xs:TypeModifiers> "suspend" => {
-        xs.push(ast::TypeModifier::Suspend);
+    <mut xs:TypeModifiers> <x:TypeModifier> => {
+        xs.push(x);
         xs
     },
 }
