@@ -56,8 +56,8 @@ pub ImportHeader6: ImportHeader = {
 }
 
 pub Identifier: Identifier = {
-    <id:Id> => Identifier { parts: vec![id] },
-    <mut ids:Identifier> "." <id:Id> => {
+    <id:SimpleIdentifier> => Identifier { parts: vec![id] },
+    <mut ids:Identifier> "." <id:SimpleIdentifier> => {
         ids.parts.push(id);
         ids
     }
