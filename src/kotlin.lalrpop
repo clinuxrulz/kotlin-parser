@@ -35,7 +35,7 @@ pub ImportHeader3: ImportHeader = {
 }
 
 pub ImportHeader4: ImportHeader = {
-    <mut r:ImportHeader5> <id:Id> => {
+    <mut r:ImportHeader5> <id:SimpleIdentifier> => {
         r.identifier.parts.push(id);
         r
     },
@@ -47,7 +47,7 @@ pub ImportHeader5: ImportHeader = {
 }
 
 pub ImportHeader6: ImportHeader = {
-    "import" <id:Id> => ImportHeader {
+    "import" <id:SimpleIdentifier> => ImportHeader {
         identifier: Identifier {
             parts: vec![id],
         },
