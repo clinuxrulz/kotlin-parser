@@ -1,6 +1,11 @@
 use crate::kotlin;
 
 #[test]
+fn test_kotlin_simple_identifier() {
+    println!("{:?}", kotlin::SimpleIdentifierParser::new().parse("abstract"));
+}
+
+#[test]
 fn test_kotlin_import() {
     println!("{:?}", kotlin::ImportHeaderParser::new().parse("import java.lang.String;"));
     println!("{:?}", kotlin::ImportHeaderParser::new().parse("import java.lang.*;"));
@@ -19,4 +24,3 @@ fn test_kotlin_import_list() {
         )
     );
 }
-
