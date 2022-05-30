@@ -64,6 +64,24 @@ pub Identifier: Identifier = {
     }
 }
 
+pub TypeProjectionModifier: ast::TypeProjectionModifier = {
+    <x: VarianceModifier> => ast::TypeProjectionModifier::VarianceModifier(x),
+    <x: Annotation> => ast::TypeProjectionModifier::Annotation(x),
+}
+
+pub VarianceModifier: ast::VarianceModifier = {
+    "in" => ast::VarianceModifier::In,
+    "out" => ast::VarianceModifier::Out,
+}
+
+pub ReificationModifier: ast::ReificationModifier = {
+    "reified" => ast::ReificationModifier::Reified,
+}
+
+pub Annotation: ast::Annotation = {
+    "todo" => ast::Annotation::Todo,
+}
+
 pub AnnotationUseSiteTarget: ast::AnnotationUseSiteTarget = {
     "@" "field" ":" => ast::AnnotationUseSiteTarget::Field,
     "@" "property" ":" => ast::AnnotationUseSiteTarget::Property,
