@@ -14,3 +14,15 @@ pub enum ImportHeader2 {
     ImportAll,
     ImportAlias(String),
 }
+
+#[derive(Debug)]
+pub enum AnnotationUseSiteTarget {
+    Field,
+    Property,
+    Get,
+    Set,
+    Receiver,
+    Param,
+    Setparam,
+    Delegate,
+}

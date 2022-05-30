@@ -1,4 +1,5 @@
 use std::str::FromStr;
+use crate::ast as ast;
 use crate::ast::Identifier;
 use crate::ast::ImportHeader;
 use crate::ast::ImportHeader2;
@@ -61,6 +62,17 @@ pub Identifier: Identifier = {
         ids.parts.push(id);
         ids
     }
+}
+
+pub AnnotationUseSiteTarget: ast::AnnotationUseSiteTarget = {
+    "@" "field" ":" => ast::AnnotationUseSiteTarget::Field,
+    "@" "property" ":" => ast::AnnotationUseSiteTarget::Property,
+    "@" "get" ":" => ast::AnnotationUseSiteTarget::Get,
+    "@" "set" ":" => ast::AnnotationUseSiteTarget::Set,
+    "@" "receiver" ":" => ast::AnnotationUseSiteTarget::Receiver,
+    "@" "param" ":" => ast::AnnotationUseSiteTarget::Param,
+    "@" "setparam" ":" => ast::AnnotationUseSiteTarget::Setparam,
+    "@" "delegate" ":" => ast::AnnotationUseSiteTarget::Delegate,
 }
 
 pub SimpleIdentifier: String = {
