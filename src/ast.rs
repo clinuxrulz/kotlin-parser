@@ -17,22 +17,52 @@ pub enum ImportHeader2 {
 
 #[derive(Debug)]
 pub struct Type {
-    type_modifiers: Vec<TypeModifier>,
-    rest: Type2,
+    pub type_modifiers: Vec<TypeModifier>,
+    pub rest: Type2,
 }
 
 #[derive(Debug)]
 pub enum Type2 {
     ParenthesizedType(Box<Type>),
     NullableType(NullableType),
-    TypeReference,
+    TypeReference(TypeReference),
     FunctionType,
+    Todo,
 }
 
 #[derive(Debug)]
 pub enum NullableType {
     TypeReference,
     ParenthesizedType(Box<Type>),
+}
+
+#[derive(Debug)]
+pub enum TypeReference {
+    UserType(UserType),
+    Dynamic,
+}
+
+#[derive(Debug)]
+pub struct UserType {
+    pub parts: Vec<SimpleUserType>,
+}
+
+#[derive(Debug)]
+pub struct SimpleUserType {
+    pub name: String,
+    pub type_arguments: Vec<TypeProjection>,
+}
+
+#[derive(Debug)]
+pub enum TypeProjection {
+    TypeProjection(TypeProjection2),
+    Mult,
+}
+
+#[derive(Debug)]
+pub struct TypeProjection2 {
+    pub type_projection_modifiers: Vec<TypeProjectionModifier>,
+    pub type_: Box<Type>,
 }
 
 #[derive(Debug)]

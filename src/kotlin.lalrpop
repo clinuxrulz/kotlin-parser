@@ -64,9 +64,27 @@ pub Identifier: Identifier = {
     }
 }
 
-pub TypeModifiers: Vec<ast::TypeModifier> = {
+pub Type: Box<ast::Type> = {
+    <m:TypeModifierMany1> <rest:Type2> => {
+        Box::new(ast::Type {
+            type_modifiers: m,
+            rest,
+        })
+    }
+}
+
+pub Type2: ast::Type2 = {
+    "todo" => ast::Type2::Todo,
+}
+
+pub TypeModifierMany0: Vec<ast::TypeModifier> = {
+    => Vec::new(),
+    <r:TypeModifierMany1> => r,
+}
+
+pub TypeModifierMany1: Vec<ast::TypeModifier> = {
     <x:TypeModifier> => vec![x],
-    <mut xs:TypeModifiers> <x:TypeModifier> => {
+    <mut xs:TypeModifierMany1> <x:TypeModifier> => {
         xs.push(x);
         xs
     }
@@ -75,6 +93,31 @@ pub TypeModifiers: Vec<ast::TypeModifier> = {
 pub TypeModifier: ast::TypeModifier = {
     <x: Annotation> => ast::TypeModifier::Annotation(x),
     "suspend" => ast::TypeModifier::Suspend,
+}
+
+//pub TypeProjection: ast::TypeProjection = {
+//    <tp:TypeProjection2> => ast::TypeProjection::TypeProjection(tp),
+//    "*" => ast::TypeProjection::Mult,
+//}
+
+//pub TypeProjection2: ast::TypeProjection2 = {
+//    <m:TypeProjectionModifierMany1> <t:Type> => ast::TypeProjection2 {
+//        type_projection_modifiers: m,
+//        type_: t,
+//    }
+//}
+
+pub TypeProjectionModifierMany0: Vec<ast::TypeProjectionModifier> = {
+    => vec![],
+    <x:TypeProjectionModifierMany1> => x,
+}
+
+pub TypeProjectionModifierMany1: Vec<ast::TypeProjectionModifier> = {
+    <x:TypeProjectionModifier> => vec![x],
+    <mut xs:TypeProjectionModifierMany1> <x:TypeProjectionModifier> => {
+        xs.push(x);
+        xs
+    }
 }
 
 pub TypeProjectionModifier: ast::TypeProjectionModifier = {
