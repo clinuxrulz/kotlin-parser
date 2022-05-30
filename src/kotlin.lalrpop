@@ -107,9 +107,17 @@ pub TypeModifier: ast::TypeModifier = {
 //}
 
 //pub TypeProjection2: ast::TypeProjection2 = {
-//    <m:TypeProjectionModifierMany1> <t:Type> => ast::TypeProjection2 {
-//        type_projection_modifiers: m,
+//    <x:TypeProjection3> <t:Type> => ast::TypeProjection2 {
+//        type_projection_modifiers: x,
 //        type_: t,
+//    },
+//}
+
+//pub TypeProjection3: Vec<ast::TypeProjectionModifier> = {
+//    => vec![],
+//    <mut xs:TypeProjection3> <x:TypeProjectionModifier> => {
+//        xs.insert(x);
+//        x
 //    }
 //}
 
@@ -141,7 +149,7 @@ pub ReificationModifier: ast::ReificationModifier = {
 }
 
 pub Annotation: ast::Annotation = {
-    "todo" => ast::Annotation::Todo,
+    "todo2" => ast::Annotation::Todo,
 }
 
 pub AnnotationUseSiteTarget: ast::AnnotationUseSiteTarget = {
