@@ -128,6 +128,25 @@ pub TypeProjectionModifierMany1: Vec<ast::TypeProjectionModifier> = {
     }
 }
 
+pub C: Vec<String> = {
+    <r:B> ">" => r,
+    <r:B> "," ">" => r,
+    "<" ">" => Vec::new(),
+    "<" "," ">" => Vec::new(),
+}
+
+B: Vec<String> = {
+    <mut xs:A> <x:Id> => {
+        xs.push(x);
+        xs
+    },
+}
+
+A: Vec<String> = {
+    "<" => Vec::new(),
+    <r:B> "," => r,
+}
+
 pub TypeProjectionModifier: ast::TypeProjectionModifier = {
     <x: VarianceModifier> => ast::TypeProjectionModifier::VarianceModifier(x),
     <x: Annotation> => ast::TypeProjectionModifier::Annotation(x),
