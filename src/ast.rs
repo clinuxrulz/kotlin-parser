@@ -56,7 +56,7 @@ pub struct SimpleUserType {
 #[derive(Debug)]
 pub enum TypeProjection {
     TypeProjection(TypeProjection2),
-    Mult,
+    Star,
 }
 
 #[derive(Debug)]

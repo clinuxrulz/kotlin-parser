@@ -97,17 +97,21 @@ pub TypeModifier: ast::TypeModifier = {
 //}
 
 //pub TypeProjection2: ast::TypeProjection2 = {
-//    <x:TypeProjection3> <t:Type> => ast::TypeProjection2 {
-//        type_projection_modifiers: x,
+//    <t:Type> => ast::TypeProjection2 {
+//        type_projection_modifiers: Vec::new(),
 //        type_: t,
 //    },
+//    <xs:TypeProjection3> <t:Type> => ast::TypeProjection2 {
+//        type_projection_modifiers: xs,
+//        type_: t,
+//    }
 //}
 
 //pub TypeProjection3: Vec<ast::TypeProjectionModifier> = {
 //    => vec![],
 //    <mut xs:TypeProjection3> <x:TypeProjectionModifier> => {
-//        xs.insert(x);
-//        x
+//        xs.push(x);
+//        xs
 //    }
 //}
 

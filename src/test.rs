@@ -24,3 +24,10 @@ fn test_kotlin_import_list() {
             .is_ok()
     );
 }
+
+/*
+#[test]
+fn test_kotlin_type_arguments() {
+    println!("{:?}", kotlin::CParser::new().parse("<out a, in b, *, c>"));
+}
+*/
