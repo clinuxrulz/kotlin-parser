@@ -136,7 +136,7 @@ pub C: Vec<String> = {
 }
 
 B: Vec<String> = {
-    <mut xs:A> <x:Id> => {
+    <mut xs:A> <m:TypeProjectionModifier*> <x:Id> => {
         xs.push(x);
         xs
     },
