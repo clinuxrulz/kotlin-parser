@@ -12,15 +12,16 @@ fn trim_newline(s: &mut String) {
 
 fn main() -> std::io::Result<()> {
     let mut buffer = String::new();
+    let parser = kotlin::TypeParser::new();
     loop {
         print!("> ");
         std::io::stdout().flush()?;
         std::io::stdin().read_line(&mut buffer)?;
         trim_newline(&mut buffer);
-        println!("{}", buffer);
         if buffer == "quit" || buffer == "exit" {
             break;
         }
+        println!("{:?}", parser.parse(&buffer));
         buffer.clear();
     }
     Ok(())
