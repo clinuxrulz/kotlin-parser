@@ -143,7 +143,21 @@ pub ReificationModifier: ast::ReificationModifier = {
 }
 
 pub Annotation: ast::Annotation = {
-    "todo2" => ast::Annotation::Todo,
+    <SingleAnnotation> => ast::Annotation::Todo,
+    <MultiAnnotation> => ast::Annotation::Todo,
+}
+
+pub SingleAnnotation: () = {
+    <MultiAnnotation2> <UnescapedAnnotation> => (),
+}
+
+pub MultiAnnotation: () = {
+    <MultiAnnotation2> "[" <UnescapedAnnotation+> "]" => (),
+}
+
+pub MultiAnnotation2: () = {
+    <UnescapedAnnotation> => (),
+    "@"
 }
 
 pub AnnotationUseSiteTarget: ast::AnnotationUseSiteTarget = {
@@ -155,6 +169,10 @@ pub AnnotationUseSiteTarget: ast::AnnotationUseSiteTarget = {
     "@" "param" ":" => ast::AnnotationUseSiteTarget::Param,
     "@" "setparam" ":" => ast::AnnotationUseSiteTarget::Setparam,
     "@" "delegate" ":" => ast::AnnotationUseSiteTarget::Delegate,
+}
+
+pub UnescapedAnnotation: () = {
+    "todo3" => (),
 }
 
 pub SimpleIdentifier: String = {
