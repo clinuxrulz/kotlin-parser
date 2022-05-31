@@ -65,7 +65,7 @@ pub Identifier: Identifier = {
 }
 
 pub Type: Box<ast::Type> = {
-    <m:TypeModifiers> <rest:Type2> => {
+    <m:TypeModifier*> <rest:Type2> => {
         Box::new(ast::Type {
             type_modifiers: m,
             rest,
@@ -128,21 +128,27 @@ pub TypeProjectionModifierMany1: Vec<ast::TypeProjectionModifier> = {
     }
 }
 
-pub C: Vec<String> = {
+pub C: Vec<ast::TypeProjection> = {
     <r:B> ">" => r,
     <r:B> "," ">" => r,
     "<" ">" => Vec::new(),
     "<" "," ">" => Vec::new(),
 }
 
-B: Vec<String> = {
-    <mut xs:A> <m:TypeProjectionModifier*> <x:Id> => {
-        xs.push(x);
+B: Vec<ast::TypeProjection> = {
+    <mut xs:A> <m:TypeProjectionModifier*> <t:Type2> => {
+        xs.push(ast::TypeProjection::TypeProjection(ast::TypeProjection2 {
+            type_projection_modifiers: m,
+            type_: Box::new(ast::Type {
+                type_modifiers: Vec::new(),
+                rest: t,
+            }),
+        }));
         xs
     },
 }
 
-A: Vec<String> = {
+A: Vec<ast::TypeProjection> = {
     "<" => Vec::new(),
     <r:B> "," => r,
 }
