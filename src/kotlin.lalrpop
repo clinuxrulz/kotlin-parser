@@ -82,6 +82,7 @@ pub TypeModifiers: Vec<ast::TypeModifier> = {
 }
 
 pub Type2: ast::Type2 = {
+    "(" <t:Type> ")" => ast::Type2::ParenthesizedType(t),
     "todo" => ast::Type2::Todo,
 }
 
