@@ -83,7 +83,9 @@ pub TypeModifiers: Vec<ast::TypeModifier> = {
 
 pub Type2: ast::Type2 = {
     "(" <t:Type> ")" => ast::Type2::ParenthesizedType(t),
+    "(" <t:Type> ")" "?"+ => ast::Type2::NullableType(ast::NullableType::ParenthesizedType(t)),
     <t:TypeReference> => ast::Type2::TypeReference(t),
+    <t:TypeReference> "?"+ => ast::Type2::NullableType(ast::NullableType::TypeReference(t)),
 }
 
 pub TypeModifier: ast::TypeModifier = {

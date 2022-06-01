@@ -32,7 +32,7 @@ pub enum Type2 {
 
 #[derive(Debug)]
 pub enum NullableType {
-    TypeReference,
+    TypeReference(TypeReference),
     ParenthesizedType(Box<Type>),
 }
 
