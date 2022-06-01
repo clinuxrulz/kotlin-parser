@@ -128,15 +128,15 @@ pub TypeProjectionModifierMany1: Vec<ast::TypeProjectionModifier> = {
     }
 }
 
-pub C: Vec<ast::TypeProjection> = {
-    <r:B> ">" => r,
-    <r:B> "," ">" => r,
+pub TypeArguments: Vec<ast::TypeProjection> = {
+    <r:TypeArguments2> ">" => r,
+    <r:TypeArguments2> "," ">" => r,
     "<" ">" => Vec::new(),
     "<" "," ">" => Vec::new(),
 }
 
-B: Vec<ast::TypeProjection> = {
-    <mut xs:A> <m:TypeProjectionModifier*> <t:Type2> => {
+TypeArguments2: Vec<ast::TypeProjection> = {
+    <mut xs:TypeArguments3> <m:TypeProjectionModifier*> <t:Type2> => {
         xs.push(ast::TypeProjection::TypeProjection(ast::TypeProjection2 {
             type_projection_modifiers: m,
             type_: Box::new(ast::Type {
@@ -146,11 +146,15 @@ B: Vec<ast::TypeProjection> = {
         }));
         xs
     },
+    <mut xs:TypeArguments3> "*" => {
+        xs.push(ast::TypeProjection::Star);
+        xs
+    }
 }
 
-A: Vec<ast::TypeProjection> = {
+TypeArguments3: Vec<ast::TypeProjection> = {
     "<" => Vec::new(),
-    <r:B> "," => r,
+    <r:TypeArguments2> "," => r,
 }
 
 pub TypeProjectionModifier: ast::TypeProjectionModifier = {
