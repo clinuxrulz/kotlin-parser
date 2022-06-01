@@ -56,6 +56,13 @@ pub ImportHeader6: ImportHeader = {
     },
 }
 
+pub Parameter: ast::Parameter = {
+    <name:SimpleIdentifier> <type_:Type> => ast::Parameter {
+        name,
+        type_,
+    }
+}
+
 pub Identifier: Identifier = {
     <id:SimpleIdentifier> => Identifier { parts: vec![id] },
     <mut ids:Identifier> "." <id:SimpleIdentifier> => {
