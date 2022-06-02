@@ -160,6 +160,25 @@ pub TypeProjectionModifier: ast::TypeProjectionModifier = {
     <x: Annotation> => ast::TypeProjectionModifier::Annotation(x),
 }
 
+pub FunctionTypeParameters: Vec<ast::FunctionTypeParameter> = {
+    "(" <mut ps:(<FunctionTypeParameter> ",")*> <p:FunctionTypeParameter?> ")" =>
+        match p {
+            None => ps,
+            Some(p) => {
+                ps.push(p);
+                ps
+            }
+        }
+}
+
+pub FunctionTypeParameter: ast::FunctionTypeParameter = {
+    <p:Parameter> => ast::FunctionTypeParameter::Parameter(p),
+    <t:Type2> => ast::FunctionTypeParameter::Type(Box::new(ast::Type {
+        type_modifiers: Vec::new(),
+        rest: t,
+    })),
+}
+
 pub ReceiverType: ast::ReceiverType = {
     <ms: TypeModifier*> <t: ReceiverType2> => ast::ReceiverType {
         type_modifiers: ms,

@@ -83,6 +83,11 @@ pub enum TypeProjectionModifier {
     Annotation(Annotation),
 }
 
+pub enum FunctionTypeParameter {
+    Parameter(Parameter),
+    Type(Box<Type>),
+}
+
 #[derive(Debug)]
 pub struct ReceiverType {
     pub type_modifiers: Vec<TypeModifier>,
