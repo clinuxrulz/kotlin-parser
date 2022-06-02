@@ -16,6 +16,12 @@ pub enum ImportHeader2 {
 }
 
 #[derive(Debug)]
+pub struct Parameter {
+    pub name: String,
+    pub type_: Box<Type>,
+}
+
+#[derive(Debug)]
 pub struct Type {
     pub type_modifiers: Vec<TypeModifier>,
     pub rest: Type2,
