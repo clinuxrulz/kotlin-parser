@@ -78,6 +78,19 @@ pub enum TypeProjectionModifier {
 }
 
 #[derive(Debug)]
+pub struct ReceiverType {
+    pub type_modifiers: Vec<TypeModifier>,
+    pub rest: ReceiverType2,
+}
+
+#[derive(Debug)]
+pub enum ReceiverType2 {
+    ParenthesizedType(Box<Type>),
+    NullableType(NullableType),
+    TypeReference(TypeReference),
+}
+
+#[derive(Debug)]
 pub enum VarianceModifier {
     In,
     Out,

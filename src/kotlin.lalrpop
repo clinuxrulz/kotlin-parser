@@ -153,6 +153,20 @@ pub TypeProjectionModifier: ast::TypeProjectionModifier = {
     <x: Annotation> => ast::TypeProjectionModifier::Annotation(x),
 }
 
+pub ReceiverType: ast::ReceiverType = {
+    <ms: TypeModifier*> <t: ReceiverType2> => ast::ReceiverType {
+        type_modifiers: ms,
+        rest: t,
+    }
+}
+
+pub ReceiverType2: ast::ReceiverType2 = {
+    "(" <t:Type> ")" => ast::ReceiverType2::ParenthesizedType(t),
+    "(" <t:Type> ")" "?"+ => ast::ReceiverType2::NullableType(ast::NullableType::ParenthesizedType(t)),
+    <t:TypeReference> => ast::ReceiverType2::TypeReference(t),
+    <t:TypeReference> "?"+ => ast::ReceiverType2::NullableType(ast::NullableType::TypeReference(t)),
+}
+
 pub VarianceModifier: ast::VarianceModifier = {
     "in" => ast::VarianceModifier::In,
     "out" => ast::VarianceModifier::Out,
