@@ -72,6 +72,48 @@ pub struct TypeProjection2 {
 }
 
 #[derive(Debug)]
+pub enum Expression {
+    PrimaryExpression(PrimaryExpression),
+    JumpExpression(JumpExpression),
+    CallableReference(Option<ReceiverType>,SimpleIdentifierOrClass),
+}
+
+#[derive(Debug)]
+pub enum PrimaryExpression {
+    ParenthesizedExpression(Box<Expression>),
+    SimpleIdentifier(String),
+    LiteralConstant(),
+    StringLiteral(),
+    CallableRederence(),
+    FunctionLiteral(),
+    ObjectLiteral(),
+    CollectionLiteral(),
+    ThisExpression(),
+    SuperExpression(),
+    IfExpression(),
+    WhenExpression(),
+    TryExpression(),
+    JumpExpression(JumpExpression),
+}
+
+#[derive(Debug)]
+pub enum JumpExpression {
+    Throw(Box<Expression>),
+    Return(Box<Expression>),
+    ReturnAt(Box<Expression>),
+    Continue,
+    ContinueAt,
+    Break,
+    BreatAt,
+}
+
+#[derive(Debug)]
+pub enum SimpleIdentifierOrClass {
+    SimpleIdentifier(String),
+    Class,
+}
+
+#[derive(Debug)]
 pub enum TypeModifier {
     Annotation(Annotation),
     Suspend,
