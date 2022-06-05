@@ -57,7 +57,7 @@ pub ImportHeader6: ImportHeader = {
 }
 
 pub Parameter: ast::Parameter = {
-    <name:SimpleIdentifier> <type_:Type> => ast::Parameter {
+    <name:SimpleIdentifier> ":" <type_:Type> => ast::Parameter {
         name,
         type_,
     }
@@ -100,7 +100,8 @@ pub TypeModifier: ast::TypeModifier = {
     "suspend" => ast::TypeModifier::Suspend,
 }
 
-pub TypeReference: ast::TypeReference = {
+#[inline]
+TypeReference: ast::TypeReference = {
     <t:UserType> => ast::TypeReference::UserType(t),
     "dynamic" => ast::TypeReference::Dynamic,
 }
@@ -160,12 +161,15 @@ pub TypeProjectionModifier: ast::TypeProjectionModifier = {
     <x: Annotation> => ast::TypeProjectionModifier::Annotation(x),
 }
 
-//pub FunctionType: ast::FunctionType = {
-//    <rt: (<ReceiverType> ".")?> <ts: FunctionTypeParameters> => ast::FunctionType {
-//        receiver_type_op: rt,
-//        type_parameters: ts,
-//    }
-//}
+pub FunctionType: ast::FunctionType = {
+    <rt: TypeReference> "." <ts: FunctionTypeParameters> => ast::FunctionType {
+        receiver_type_op: Some(ast::ReceiverType {
+            type_modifiers: Vec::new(),
+            rest: ast::ReceiverType2::TypeReference(rt),
+        }),
+        type_parameters: ts,
+    }
+}
 
 pub FunctionTypeParameters: Vec<ast::FunctionTypeParameter> = {
     "(" <mut ps:(<FunctionTypeParameter> ",")*> <p:FunctionTypeParameter?> ")" =>

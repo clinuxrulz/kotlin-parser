@@ -12,7 +12,7 @@ fn trim_newline(s: &mut String) {
 
 fn main() -> std::io::Result<()> {
     let mut buffer = String::new();
-    let parser = kotlin::TypeParser::new();
+    let parser = kotlin::FunctionTypeParser::new();
     loop {
         print!("> ");
         std::io::stdout().flush()?;
