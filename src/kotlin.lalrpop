@@ -242,6 +242,21 @@ pub UnescapedAnnotation: () = {
     "todo3" => (),
 }
 
+Statement: () = {
+    <LabelsAndAnnotations> => (),
+}
+
+LabelsAndAnnotations: () = {
+    <Label> => (),
+    <Annotation> => (),
+    <LabelsAndAnnotations> <Label> => (),
+    <LabelsAndAnnotations> <Annotation> => (),
+}
+
+Label: () = {
+    <SimpleIdentifier> "@" => (),
+}
+
 pub SimpleIdentifier: String = {
     <id:Id> => id,
     "abstract" => "abstract".to_owned(),
