@@ -316,35 +316,54 @@ Modifier: () = {
 }
 
 ClassModifier: () = {
-    "todoClassModifier" => (),
+    "enum" => (),
+    "sealed" => (),
+    "annotation" => (),
+    "data" => (),
+    "inner" => (),
+    "value" => (),
 }
 
 MemberModifier: () = {
-    "todoMemberModifier" => (),
+    "override" => (),
+    "lateinit" => (),
 }
 
 VisibilityModifier: () = {
-    "todoVisibilityModifier" => (),
+    "public" => (),
+    "private" => (),
+    "internal" => (),
+    "protected" => (),
 }
 
 FunctionModifier: () = {
-    "todoFunctionModifier" => (),
+    "tailrec" => (),
+    "operator" => (),
+    "infix" => (),
+    "inline" => (),
+    "external" => (),
+    "suspend" => (),
 }
 
 PropertyModifier: () = {
-    "todoPropertyModifier" => (),
+    "const" => (),
 }
 
 InheritanceModifier: () = {
-    "todoInheritanceModifier" => (),
+    "abstract" => (),
+    "final" => (),
+    "open" => (),
 }
 
 ParameterModifier: () = {
-    "todoParameterModifier" => (),
+    "vararg" => (),
+    "noinline" => (),
+    "crossinline" => (),
 }
 
 PlatformModifier: () = {
-    "todoPlatformModifier" => (),
+    "expect" => (),
+    "actual" => (),
 }
 
 TypeParameters: () = {
