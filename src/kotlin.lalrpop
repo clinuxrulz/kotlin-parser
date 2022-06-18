@@ -19,7 +19,7 @@ pub ImportHeader: ImportHeader = {
     <ImportHeader2>,
 }
 
-pub ImportHeader2: ImportHeader = {
+ImportHeader2: ImportHeader = {
     <ImportHeader3>,
     <mut r:ImportHeader4> "as" <id:Id> => {
         r.rest_op = Some(ImportHeader2::ImportAlias(id));
@@ -27,7 +27,7 @@ pub ImportHeader2: ImportHeader = {
     },
 }
 
-pub ImportHeader3: ImportHeader = {
+ImportHeader3: ImportHeader = {
     <mut r:ImportHeader5> "*" => {
         r.rest_op = Some(ImportHeader2::ImportAll);
         r
@@ -35,19 +35,19 @@ pub ImportHeader3: ImportHeader = {
     <ImportHeader4>,
 }
 
-pub ImportHeader4: ImportHeader = {
+ImportHeader4: ImportHeader = {
     <mut r:ImportHeader5> <id:SimpleIdentifier> => {
         r.identifier.parts.push(id);
         r
     },
 }
 
-pub ImportHeader5: ImportHeader = {
+ImportHeader5: ImportHeader = {
     <ImportHeader6> ".",
     <ImportHeader4> ".",
 }
 
-pub ImportHeader6: ImportHeader = {
+ImportHeader6: ImportHeader = {
     "import" <id:SimpleIdentifier> => ImportHeader {
         identifier: Identifier {
             parts: vec![id],
@@ -56,7 +56,7 @@ pub ImportHeader6: ImportHeader = {
     },
 }
 
-pub Parameter: ast::Parameter = {
+Parameter: ast::Parameter = {
     <name:SimpleIdentifier> ":" <type_:Type> => ast::Parameter {
         name,
         type_,
@@ -71,7 +71,7 @@ pub Identifier: Identifier = {
     }
 }
 
-pub Type: Box<ast::Type> = {
+Type: Box<ast::Type> = {
     <m:TypeModifier*> <rest:Type2> => {
         Box::new(ast::Type {
             type_modifiers: m,
@@ -80,7 +80,7 @@ pub Type: Box<ast::Type> = {
     }
 }
 
-pub TypeModifiers: Vec<ast::TypeModifier> = {
+TypeModifiers: Vec<ast::TypeModifier> = {
     => Vec::new(),
     <mut xs:TypeModifiers> <x:TypeModifier> => {
         xs.push(x);
@@ -88,14 +88,14 @@ pub TypeModifiers: Vec<ast::TypeModifier> = {
     },
 }
 
-pub Type2: ast::Type2 = {
+Type2: ast::Type2 = {
     "(" <t:Type> ")" => ast::Type2::ParenthesizedType(t),
     "(" <t:Type> ")" "?"+ => ast::Type2::NullableType(ast::NullableType::ParenthesizedType(t)),
     <t:TypeReference> => ast::Type2::TypeReference(t),
     <t:TypeReference> "?"+ => ast::Type2::NullableType(ast::NullableType::TypeReference(t)),
 }
 
-pub TypeModifier: ast::TypeModifier = {
+TypeModifier: ast::TypeModifier = {
     <x: Annotation> => ast::TypeModifier::Annotation(x),
     "suspend" => ast::TypeModifier::Suspend,
 }
@@ -106,7 +106,7 @@ TypeReference: ast::TypeReference = {
     "dynamic" => ast::TypeReference::Dynamic,
 }
 
-pub UserType: ast::UserType = {
+UserType: ast::UserType = {
     <t:SimpleUserType> => ast::UserType {
         parts: vec![t],
     },
@@ -116,7 +116,7 @@ pub UserType: ast::UserType = {
     }
 }
 
-pub SimpleUserType: ast::SimpleUserType = {
+SimpleUserType: ast::SimpleUserType = {
     <n:SimpleIdentifierNoDynamic> => ast::SimpleUserType {
         name: n,
         type_arguments: Vec::new(),
@@ -127,7 +127,7 @@ pub SimpleUserType: ast::SimpleUserType = {
     }
 }
 
-pub TypeArguments: Vec<ast::TypeProjection> = {
+TypeArguments: Vec<ast::TypeProjection> = {
     <r:TypeArguments2> ">" => r,
     <r:TypeArguments2> "," ">" => r,
     "<" ">" => Vec::new(),
@@ -156,7 +156,7 @@ TypeArguments3: Vec<ast::TypeProjection> = {
     <r:TypeArguments2> "," => r,
 }
 
-pub TypeProjectionModifier: ast::TypeProjectionModifier = {
+TypeProjectionModifier: ast::TypeProjectionModifier = {
     <x: VarianceModifier> => ast::TypeProjectionModifier::VarianceModifier(x),
     <x: Annotation> => ast::TypeProjectionModifier::Annotation(x),
 }
@@ -171,7 +171,7 @@ pub FunctionType: ast::FunctionType = {
     }
 }
 
-pub FunctionTypeParameters: Vec<ast::FunctionTypeParameter> = {
+FunctionTypeParameters: Vec<ast::FunctionTypeParameter> = {
     "(" <mut ps:(<FunctionTypeParameter> ",")*> <p:FunctionTypeParameter?> ")" =>
         match p {
             None => ps,
@@ -182,7 +182,7 @@ pub FunctionTypeParameters: Vec<ast::FunctionTypeParameter> = {
         }
 }
 
-pub FunctionTypeParameter: ast::FunctionTypeParameter = {
+FunctionTypeParameter: ast::FunctionTypeParameter = {
     <p:Parameter> => ast::FunctionTypeParameter::Parameter(p),
     <t:Type2> => ast::FunctionTypeParameter::Type(Box::new(ast::Type {
         type_modifiers: Vec::new(),
@@ -190,48 +190,48 @@ pub FunctionTypeParameter: ast::FunctionTypeParameter = {
     })),
 }
 
-pub ReceiverType: ast::ReceiverType = {
+ReceiverType: ast::ReceiverType = {
     <ms: TypeModifier*> <t: ReceiverType2> => ast::ReceiverType {
         type_modifiers: ms,
         rest: t,
     }
 }
 
-pub ReceiverType2: ast::ReceiverType2 = {
+ReceiverType2: ast::ReceiverType2 = {
     "(" <t:Type> ")" => ast::ReceiverType2::ParenthesizedType(t),
     "(" <t:Type> ")" "?"+ => ast::ReceiverType2::NullableType(ast::NullableType::ParenthesizedType(t)),
     <t:TypeReference> => ast::ReceiverType2::TypeReference(t),
     <t:TypeReference> "?"+ => ast::ReceiverType2::NullableType(ast::NullableType::TypeReference(t)),
 }
 
-pub VarianceModifier: ast::VarianceModifier = {
+VarianceModifier: ast::VarianceModifier = {
     "in" => ast::VarianceModifier::In,
     "out" => ast::VarianceModifier::Out,
 }
 
-pub ReificationModifier: ast::ReificationModifier = {
+ReificationModifier: ast::ReificationModifier = {
     "reified" => ast::ReificationModifier::Reified,
 }
 
-pub Annotation: ast::Annotation = {
+Annotation: ast::Annotation = {
     <SingleAnnotation> => ast::Annotation::Todo,
     <MultiAnnotation> => ast::Annotation::Todo,
 }
 
-pub SingleAnnotation: () = {
+SingleAnnotation: () = {
     <MultiAnnotation2> <UnescapedAnnotation> => (),
 }
 
-pub MultiAnnotation: () = {
+MultiAnnotation: () = {
     <MultiAnnotation2> "[" <UnescapedAnnotation+> "]" => (),
 }
 
-pub MultiAnnotation2: () = {
+MultiAnnotation2: () = {
     <UnescapedAnnotation> => (),
     "@"
 }
 
-pub AnnotationUseSiteTarget: ast::AnnotationUseSiteTarget = {
+AnnotationUseSiteTarget: ast::AnnotationUseSiteTarget = {
     "@" "field" ":" => ast::AnnotationUseSiteTarget::Field,
     "@" "property" ":" => ast::AnnotationUseSiteTarget::Property,
     "@" "get" ":" => ast::AnnotationUseSiteTarget::Get,
@@ -242,12 +242,20 @@ pub AnnotationUseSiteTarget: ast::AnnotationUseSiteTarget = {
     "@" "delegate" ":" => ast::AnnotationUseSiteTarget::Delegate,
 }
 
-pub UnescapedAnnotation: () = {
+UnescapedAnnotation: () = {
     "todo3" => (),
 }
 
+Statements: () = {
+    <Statements> ";" <Statement> ";"
+    <Statement> ";"
+}
+
 Statement: () = {
-    <LabelsAndAnnotations> => (),
+    <LabelsAndAnnotations> <Declaration> => (),
+    <LabelsAndAnnotations> <Assignment> => (),
+    <LabelsAndAnnotations> <LoopStatement> => (),
+    <LabelsAndAnnotations> <Expression> => (),
 }
 
 LabelsAndAnnotations: () = {
@@ -255,6 +263,22 @@ LabelsAndAnnotations: () = {
     <Annotation> => (),
     <LabelsAndAnnotations> <Label> => (),
     <LabelsAndAnnotations> <Annotation> => (),
+}
+
+Declaration: () = {
+    "todoDeclaration" => (),
+}
+
+Assignment: () = {
+    "todoAssignment" => (),
+}
+
+LoopStatement: () = {
+    "todoLoopStatement" => (),
+}
+
+Expression: () = {
+    "todoExpression" => (),
 }
 
 Label: () = {
@@ -312,7 +336,7 @@ pub SimpleIdentifier: String = {
     "value" => "value".to_owned(),
 }
 
-pub SimpleIdentifierNoDynamic: String = {
+SimpleIdentifierNoDynamic: String = {
     <id:Id> => id,
     "abstract" => "abstract".to_owned(),
     "annotation" => "annotation".to_owned(),
