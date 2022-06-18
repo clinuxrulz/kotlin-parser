@@ -402,7 +402,35 @@ ValOrVar: () = {
 }
 
 DelegationSpecifiers: () = {
-    "todoDelegationSpecifiers" => (),
+    <AnnotatedDelegationSpecifier> <("," AnnotatedDelegationSpecifier)*> => (),
+}
+
+AnnotatedDelegationSpecifier: () = {
+    <Annotation*> <DelegationSpecifier> => (),
+}
+
+DelegationSpecifier: () = {
+    <ConstructorInvocation> => (),
+    <ExplicitDelegation> => (),
+    <UserType> => (),
+    <FunctionType> => (),
+}
+
+ConstructorInvocation: () = {
+    <UserType> <ValueArguments> => (),
+}
+
+ValueArguments: () = {
+    "(" <(ValueArgument ("," ValueArgument)* ","?)?> ")" => (),
+}
+
+ValueArgument: () = {
+    <Annotation?> <(SimpleIdentifier "=")?> "*"? <Expression> => (),
+}
+
+ExplicitDelegation: () = {
+    <UserType> "by" <Expression> => (),
+    <FunctionType> "by" <Expression> => (),
 }
 
 TypeConstraints: () = {
