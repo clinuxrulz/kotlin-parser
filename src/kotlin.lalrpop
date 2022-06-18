@@ -367,7 +367,19 @@ PlatformModifier: () = {
 }
 
 TypeParameters: () = {
-    "todoTypeParameters" => (),
+    "<" <("," TypeParameter)*> ","? ">" => (),
+}
+
+TypeParameter: () = {
+    <TypeParameterModifiers?> SimpleIdentifier <(":" Type)?> => (),
+}
+
+TypeParameterModifiers: () = {
+    <TypeParameterModifier+> => (),
+}
+
+TypeParameterModifier: () = {
+    "todoTypeParameterModifier" => (),
 }
 
 PrimaryConstructor: () = {
