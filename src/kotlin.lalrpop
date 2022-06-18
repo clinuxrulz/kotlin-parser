@@ -300,7 +300,51 @@ ClassOrFunOpInterface: () = {
 }
 
 Modifiers: () = {
-    "todoModifiers" => (),
+    <Annotation> => (),
+    <Modifier+> => (),
+}
+
+Modifier: () = {
+    <ClassModifier> => (),
+    <MemberModifier> => (),
+    <VisibilityModifier> => (),
+    <FunctionModifier> => (),
+    <PropertyModifier> => (),
+    <InheritanceModifier> => (),
+    <ParameterModifier> => (),
+    <PlatformModifier> => (),
+}
+
+ClassModifier: () = {
+    "todoClassModifier" => (),
+}
+
+MemberModifier: () = {
+    "todoMemberModifier" => (),
+}
+
+VisibilityModifier: () = {
+    "todoVisibilityModifier" => (),
+}
+
+FunctionModifier: () = {
+    "todoFunctionModifier" => (),
+}
+
+PropertyModifier: () = {
+    "todoPropertyModifier" => (),
+}
+
+InheritanceModifier: () = {
+    "todoInheritanceModifier" => (),
+}
+
+ParameterModifier: () = {
+    "todoParameterModifier" => (),
+}
+
+PlatformModifier: () = {
+    "todoPlatformModifier" => (),
 }
 
 TypeParameters: () = {
