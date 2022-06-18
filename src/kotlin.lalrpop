@@ -379,7 +379,9 @@ TypeParameterModifiers: () = {
 }
 
 TypeParameterModifier: () = {
-    "todoTypeParameterModifier" => (),
+    <ReificationModifier> => (),
+    <VarianceModifier> => (),
+    <Annotation> => (),
 }
 
 PrimaryConstructor: () = {
