@@ -266,7 +266,81 @@ LabelsAndAnnotations: () = {
 }
 
 Declaration: () = {
-    "todoDeclaration" => (),
+    <ClassDeclaration> => (),
+    <ObjectDeclaration> => (),
+    <FunctionDeclaration> => (),
+    <PropertyDeclaration> => (),
+    <TypeAlias> => (),
+}
+
+ClassDeclaration: () = {
+    <Modifiers?>
+    <ClassOrFunOpInterface>
+    <SimpleIdentifier>
+    <TypeParameters?>
+    <PrimaryConstructor?>
+    <(":" DelegationSpecifiers)?>
+    <TypeConstraints?>
+    <ClassBody>
+        => (),
+    <Modifiers?>
+    <ClassOrFunOpInterface>
+    <SimpleIdentifier>
+    <TypeParameters?>
+    <PrimaryConstructor?>
+    <(":" DelegationSpecifiers)?>
+    <TypeConstraints?>
+    <EnumClassBody>
+        => (),
+}
+
+ClassOrFunOpInterface: () = {
+    "class" => (),
+    "fun"? "interface" => (),
+}
+
+Modifiers: () = {
+    "todoModifiers" => (),
+}
+
+TypeParameters: () = {
+    "todoTypeParameters" => (),
+}
+
+PrimaryConstructor: () = {
+    "todoPrimaryConstructor" => (),
+}
+
+DelegationSpecifiers: () = {
+    "todoDelegationSpecifiers" => (),
+}
+
+TypeConstraints: () = {
+    "todoTypeConstraints" => (),
+}
+
+ClassBody: () = {
+    "todoClassBody" => (),
+}
+
+EnumClassBody: () = {
+    "todoEnumClassBody" => (),
+}
+
+ObjectDeclaration: () = {
+    "todoObjectDeclaration" => (),
+}
+
+FunctionDeclaration: () = {
+    "todoFunctionDeclaration" => (),
+}
+
+PropertyDeclaration: () = {
+    "todoPropertyDeclaration" => (),
+}
+
+TypeAlias: () = {
+    "todoTypeAlias" => (),
 }
 
 Assignment: () = {
