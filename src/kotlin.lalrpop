@@ -385,7 +385,20 @@ TypeParameterModifier: () = {
 }
 
 PrimaryConstructor: () = {
-    "todoPrimaryConstructor" => (),
+    <(Modifiers? "constructor")?> <ClassParameters> => (),
+}
+
+ClassParameters: () = {
+    "(" <(ClassParameter ("," ClassParameter)* ","?)?> ")" => (),
+}
+
+ClassParameter: () = {
+    <Modifiers?> <ValOrVar?> <SimpleIdentifier> ":" <Type> <("=" Expression)?> => (),
+}
+
+ValOrVar: () = {
+    "val" => (),
+    "var" => (),
 }
 
 DelegationSpecifiers: () = {
